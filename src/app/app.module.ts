@@ -11,9 +11,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatDividerModule} from '@angular/material/divider';
+import {MatRadioModule} from '@angular/material/radio';
 import { RegistroUsuariosScreenComponent } from './screens/registro-usuarios-screen/registro-usuarios-screen.component';
 import { HomeScreenComponent } from './screens/home-screen/home-screen.component';
 import { NavbarComponent } from './partials/navbar/navbar.component';
+import { RegistroAdminComponent } from './partials/registro-admin/registro-admin.component';
+import { RegistroAlumnosComponent } from './partials/registro-alumnos/registro-alumnos.component';
+import { RegistroMaestrosComponent } from './partials/registro-maestros/registro-maestros.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +25,10 @@ import { NavbarComponent } from './partials/navbar/navbar.component';
     LoginScreenComponent,
     RegistroUsuariosScreenComponent,
     HomeScreenComponent,
-    NavbarComponent
+    NavbarComponent,
+    RegistroAdminComponent,
+    RegistroAlumnosComponent,
+    RegistroMaestrosComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +37,8 @@ import { NavbarComponent } from './partials/navbar/navbar.component';
     MatButtonModule,
     MatIconModule,
     MatDividerModule,
-    FormsModule
+    FormsModule,
+    MatRadioModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
