@@ -9,7 +9,7 @@ import { HomeScreenComponent } from './screens/home-screen/home-screen.component
 // si las comillas no tienen nada lo identifica que es la raiz
 const routes: Routes = [
   { path: '', component:LoginScreenComponent, pathMatch: 'full'},
-  { path: 'registro-usuario', component:RegistroUsuariosScreenComponent, pathMatch: 'full'},
+  { path: 'registro-usuarios', component:RegistroUsuariosScreenComponent, pathMatch: 'full'},
   { path: 'home', component:HomeScreenComponent, pathMatch: 'full'}
 ];
 
