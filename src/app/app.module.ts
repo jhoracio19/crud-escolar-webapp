@@ -34,6 +34,9 @@ import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 
 // Cambia al idioma español
 import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { AdminScreenComponent } from './screens/admin-screen/admin-screen.component';
+import { AlumnosScreenComponent } from './screens/alumnos-screen/alumnos-screen.component';
+import { MaestrosScreenComponent } from './screens/maestros-screen/maestros-screen.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +47,10 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
     NavbarComponent,
     RegistroAdminComponent,
     RegistroAlumnosComponent,
-    RegistroMaestrosComponent
+    RegistroMaestrosComponent,
+    AdminScreenComponent,
+    AlumnosScreenComponent,
+    MaestrosScreenComponent
   ],
   imports: [
     BrowserModule,
