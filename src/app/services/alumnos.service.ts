@@ -1,10 +1,11 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { FacadeService } from './facade.service';
-import { ErrorsService } from './tools/errors.service';
 import { ValidatorService } from './tools/validator.service';
+import { ErrorsService } from './tools/errors.service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { FacadeService } from './facade.service';
+
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -123,6 +124,12 @@ export class AlumnosService {
   //Servicio para registrar un nuevo alumno
   public registrarAlumno (data: any): Observable <any>{
     return this.http.post<any>(`${environment.url_api}/alumnos/`,data, httpOptions);
+  }
+
+  public obtenerListaAlumnos (): Observable <any>{
+  var token = this.facadeService.getSessionToken();
+  var headers = new HttpHeaders({ 'Content-Type': 'application/json' , 'Authorization': 'Bearer '+token});
+  return this.http.get<any>(`${environment.url_api}/lista-alumnos/`, {headers:headers});
   }
 
 }
