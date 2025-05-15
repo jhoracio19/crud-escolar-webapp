@@ -1,10 +1,10 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { FacadeService } from './facade.service';
-import { ErrorsService } from './tools/errors.service';
 import { ValidatorService } from './tools/validator.service';
-import { Observable } from 'rxjs';
+import { ErrorsService } from './tools/errors.service';
 import { environment } from 'src/environments/environment';
+import { Observable } from 'rxjs';
+import { FacadeService } from './facade.service';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -118,5 +118,24 @@ export class MaestrosService {
     var token = this.facadeService.getSessionToken();
     var headers = new HttpHeaders({ 'Content-Type': 'application/json' , 'Authorization': 'Bearer '+token});
     return this.http.get<any>(`${environment.url_api}/lista-maestros/`, {headers:headers});
+  }
+
+  //Obtener un solo maestro dependiendo su ID
+  public getMaestroByID(idUser: Number){
+    return this.http.get<any>(`${environment.url_api}/maestros/?id=${idUser}`,httpOptions);
+  }
+
+  //Servicio para actualizar un usuario
+  public editarMaestro (data: any): Observable <any>{
+    var token = this.facadeService.getSessionToken();
+    var headers = new HttpHeaders({ 'Content-Type': 'application/json' , 'Authorization': 'Bearer '+token});
+    return this.http.put<any>(`${environment.url_api}/maestros-edit/`, data, {headers:headers});
+  }
+
+  //Eliminar Maestro
+  public eliminarMaestro(idUser: number): Observable <any>{
+    var token = this.facadeService.getSessionToken();
+    var headers = new HttpHeaders({ 'Content-Type': 'application/json' , 'Authorization': 'Bearer '+token});
+    return this.http.delete<any>(`${environment.url_api}/maestros-edit/?id=${idUser}`,{headers:headers});
   }
 }
