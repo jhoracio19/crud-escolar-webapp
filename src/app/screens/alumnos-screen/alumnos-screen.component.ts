@@ -98,8 +98,8 @@ export class AlumnosScreenComponent implements OnInit, AfterViewInit {
     );
   }
 
-  public goEditar(idUser: number) {
-    // lógica para editar
+  public goEditar(idUser: number){
+    this.router.navigate(["registro-usuarios/alumno/"+idUser]);
   }
 
   public delete(idUser: number) {

@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FacadeService } from 'src/app/services/facade.service';
+import { Location } from '@angular/common';
 import { MaestrosService } from 'src/app/services/maestros.service';
+import { FacadeService } from 'src/app/services/facade.service';
 declare var $:any;
 
 @Component({
@@ -11,9 +11,6 @@ declare var $:any;
   styleUrls: ['./registro-maestros.component.scss']
 })
 export class RegistroMaestrosComponent implements OnInit{
-soloLetras($event: KeyboardEvent) {
-throw new Error('Method not implemented.');
-}
   @Input() rol: string = "";
   @Input() datos_user: any = {};
 
@@ -113,7 +110,25 @@ throw new Error('Method not implemented.');
   }
 
   public actualizar(){
+    //Validación
+    this.errors = [];
 
+    this.errors = this.maestrosService.validarMaestro(this.maestro, this.editar);
+    if(!$.isEmptyObject(this.errors)){
+      return false;
+    }
+    console.log("Pasó la validación");
+
+    this.maestrosService.editarMaestro(this.maestro).subscribe(
+      (response)=>{
+        alert("Maestro editado correctamente");
+        console.log("Maestro editado: ", response);
+        //Si se editó, entonces mandar al home
+        this.router.navigate(["home"]);
+      }, (error)=>{
+        alert("No se pudo editar el maestro");
+      }
+    );
   }
 
   public checkboxChange(event:any){

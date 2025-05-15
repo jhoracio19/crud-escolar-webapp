@@ -51,7 +51,7 @@ export class RegistroUsuariosScreenComponent implements OnInit{
       this.idUser = this.activatedRoute.snapshot.params['id'];
       console.log("ID User: ", this.idUser);
       //Al iniciar la vista obtiene el usuario por su ID
-      // this.obtenerUserByID();
+      this.obtenerUserByID();
     }
   }
 

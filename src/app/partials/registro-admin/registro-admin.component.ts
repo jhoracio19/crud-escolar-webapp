@@ -1,7 +1,8 @@
+import { FacadeService } from './../../services/facade.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { AdministradoresService } from 'src/app/services/admistradores.service';
 import { Location } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 declare var $:any;
 
 @Component({
@@ -16,6 +17,7 @@ export class RegistroAdminComponent implements OnInit {
   public admin:any = {};
   public errors:any = {};
   public editar:boolean = false;
+  public idUser: Number = 0;
 
     //Para contraseñas
     public hide_1: boolean = false;
@@ -25,15 +27,30 @@ export class RegistroAdminComponent implements OnInit {
   token: string;
 
   constructor(
-    private location: Location,
     private administradoresService: AdministradoresService,
-    private router: Router
+    private router: Router,
+    private location : Location,
+    public activatedRoute: ActivatedRoute,
+    private facadeService: FacadeService
   ){}
 
   ngOnInit(): void {
-    this.admin = this.administradoresService.esquemaAdmin();
-    this.admin.rol = this.rol;
-    console.log("Los datos del admin son: ", this.admin);
+    //El primer if valida si existe un parámetro en la URL
+    if(this.activatedRoute.snapshot.params['id'] != undefined){
+      this.editar = true;
+      //Asignamos a nuestra variable global el valor del ID que viene por la URL
+      this.idUser = this.activatedRoute.snapshot.params['id'];
+      console.log("ID User: ", this.idUser);
+      //Al iniciar la vista asignamos los datos del user
+      this.admin = this.datos_user;
+    }else{
+      this.admin = this.administradoresService.esquemaAdmin();
+      this.admin.rol = this.rol;
+      this.token = this.facadeService.getSessionToken();
+    }
+    //Imprimir datos en consola
+    console.log("Admin: ", this.admin);
+
   }
 
    //Funciones para password
@@ -100,8 +117,26 @@ export class RegistroAdminComponent implements OnInit {
     }
   }
 
-  public actualizar(){
+ public actualizar(){
+    //Validación
+    this.errors = [];
 
+    this.errors = this.administradoresService.validarAdmin(this.admin, this.editar);
+    if(!$.isEmptyObject(this.errors)){
+      return false;
+    }
+    console.log("Pasó la validación");
+
+    this.administradoresService.editarAdmin(this.admin).subscribe(
+      (response)=>{
+        alert("Administrador editado correctamente");
+        console.log("Admin editado: ", response);
+        //Si se editó, entonces mandar al home
+        this.router.navigate(["home"]);
+      }, (error)=>{
+        alert("No se pudo editar el administrador");
+      }
+    );
   }
 
   public soloLetras(event: KeyboardEvent) {
